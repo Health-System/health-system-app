@@ -32,6 +32,7 @@ public class AdminService {
     public String deployContract(String privateKey) {
         try {
             String contractAddress = contractService.deployContract(privateKey);
+//            contractService.setContractAddress(contractAddress,privateKey);
             return contractAddress;
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,8 +16,25 @@ public class HealthPlatformContractService {
     private final static BigInteger GAS_LIMIT = BigInteger.valueOf(6721975L);
     private final static BigInteger GAS_PRICE = BigInteger.valueOf(20000000000L);
 
-    private static String contractAddress = null ;
+//    private static String contractAddress = null ;
 
+
+    public void setContract(HealthPlatform contract) {
+        this.contract = contract;
+    }
+
+//    public void setContractAddress(String address, String  privateKey){
+//        Web3j web3j = Web3j.build(new HttpService());
+//        Credentials credentials = Credentials.create(privateKey);
+//        HealthPlatform healthPlatform = loadContract(address, web3j, credentials);
+//        healthPlatform.setContractAddress(address);
+//    }
+//
+//    public String  getContractAddress(String privateKey){
+//        Web3j web3j = Web3j.build(new HttpService());
+//        Credentials credentials = Credentials.create(privateKey);
+//        HealthPlatform healthPlatform = loadContract(address, web3j, credentials);
+//        healthPlatform.setContractAddress(address);    }
 
 
     public String getAdministratorAddress() throws Exception {
@@ -43,7 +60,8 @@ public class HealthPlatformContractService {
                     GAS_LIMIT
             ).send();
 
-            contractAddress = healthPlatform.getContractAddress();
+//            contractAddress = healthPlatform.getContractAddress();
+            this.setContract(healthPlatform);
             return healthPlatform.getContractAddress();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +82,7 @@ public class HealthPlatformContractService {
         try {
             Web3j web3j = Web3j.build(new HttpService());
             Credentials credentials = Credentials.create(privateKey);
-            loadContract(contractAddress , web3j, credentials);
+            loadContract(contract.getContractAddress() , web3j, credentials);
             contract.addDoctor(doctorAddress).send();
         } catch (Exception e) {
             throw new RuntimeException("Error adding doctor: " + e.getMessage());
@@ -76,7 +94,7 @@ public class HealthPlatformContractService {
         try {
             Web3j web3j = Web3j.build(new HttpService());
             Credentials credentials = Credentials.create(privateKey);
-            loadContract(contractAddress , web3j, credentials);
+            loadContract(contract.getContractAddress() , web3j, credentials);
             contract.addPatient(patientAddress).send();
         } catch (Exception e) {
             throw new RuntimeException("Error adding patient: " + e.getMessage());
