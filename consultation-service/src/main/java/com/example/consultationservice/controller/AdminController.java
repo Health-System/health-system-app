@@ -19,19 +19,18 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticateAdmin(@RequestBody DeployDto deployDto) {
-        if (adminService.authenticateAdmin(deployDto.getPrivateKey())) {
-            return ResponseEntity.ok("Admin authenticated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid private key");
-        }
-    }
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<String> authenticateAdmin(@RequestBody DeployDto deployDto) {
+//        if (adminService.authenticateAdmin(deployDto.getPrivateKey())) {
+//            return ResponseEntity.ok("Admin authenticated successfully");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid private key");
+//        }
+//    }
 
 
     @PostMapping("/deploy-contract/")
     public ResponseEntity<String> deployContract(@RequestBody DeployDto deployDto) {
-        System.out.println(deployDto.getPrivateKey());
         String contractAddress = adminService.deployContract(deployDto.getPrivateKey());
         if (contractAddress != null) {
             return ResponseEntity.ok("Contract deployed. Address: " + contractAddress);

@@ -1,7 +1,7 @@
 package com.example.consultationservice.service;
 
 import com.example.consultationservice.contracts.HealthPlatform;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.consultationservice.dto.MedRecDto;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -22,19 +22,6 @@ public class HealthPlatformContractService {
     public void setContract(HealthPlatform contract) {
         this.contract = contract;
     }
-
-//    public void setContractAddress(String address, String  privateKey){
-//        Web3j web3j = Web3j.build(new HttpService());
-//        Credentials credentials = Credentials.create(privateKey);
-//        HealthPlatform healthPlatform = loadContract(address, web3j, credentials);
-//        healthPlatform.setContractAddress(address);
-//    }
-//
-//    public String  getContractAddress(String privateKey){
-//        Web3j web3j = Web3j.build(new HttpService());
-//        Credentials credentials = Credentials.create(privateKey);
-//        HealthPlatform healthPlatform = loadContract(address, web3j, credentials);
-//        healthPlatform.setContractAddress(address);    }
 
 
     public String getAdministratorAddress() throws Exception {
@@ -60,7 +47,6 @@ public class HealthPlatformContractService {
                     GAS_LIMIT
             ).send();
 
-//            contractAddress = healthPlatform.getContractAddress();
             this.setContract(healthPlatform);
             return healthPlatform.getContractAddress();
         } catch (Exception e) {
@@ -82,8 +68,8 @@ public class HealthPlatformContractService {
         try {
             Web3j web3j = Web3j.build(new HttpService());
             Credentials credentials = Credentials.create(privateKey);
-            loadContract(contract.getContractAddress() , web3j, credentials);
-            contract.addDoctor(doctorAddress).send();
+            HealthPlatform contractLoaded = loadContract(contract.getContractAddress() , web3j, credentials);
+            contractLoaded.addDoctor(doctorAddress).send();
         } catch (Exception e) {
             throw new RuntimeException("Error adding doctor: " + e.getMessage());
         }
@@ -94,12 +80,25 @@ public class HealthPlatformContractService {
         try {
             Web3j web3j = Web3j.build(new HttpService());
             Credentials credentials = Credentials.create(privateKey);
-            loadContract(contract.getContractAddress() , web3j, credentials);
-            contract.addPatient(patientAddress).send();
+            HealthPlatform contractLoaded = loadContract(contract.getContractAddress() , web3j, credentials);
+            contractLoaded.addPatient(patientAddress).send();
         } catch (Exception e) {
             throw new RuntimeException("Error adding patient: " + e.getMessage());
         }
     }
 
 
+    public void addMedicalRecord(String privateKey, MedRecDto medRecDto) {
+        try {
+            Web3j web3j = Web3j.build(new HttpService());
+            Credentials credentials = Credentials.create(privateKey);
+            HealthPlatform contractLoaded = loadContract(contract.getContractAddress() , web3j, credentials);
+            contractLoaded.addMedicalRecord(medRecDto.getPatientAddress(),
+                                     medRecDto.getDiagnosis(),
+                                     medRecDto.getPrescription()).send();
+        } catch (Exception e) {
+            throw new RuntimeException("Error adding medical record: " + e.getMessage());
+        }
+
+    }
 }

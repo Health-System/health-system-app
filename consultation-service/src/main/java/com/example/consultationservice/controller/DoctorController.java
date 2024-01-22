@@ -1,5 +1,6 @@
 package com.example.consultationservice.controller;
 
+import com.example.consultationservice.dto.AddMedRecDto;
 import com.example.consultationservice.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/doctor")
 public class DoctorController {
 
-//    @Autowired
-//    private DoctorService doctorService;
-//
-////    @PostMapping("/add-medical-record")
-////    public ResponseEntity<String> addMedicalRecord(@RequestBody AddMedicalRecordRequest request) {
-////        try {
-////            doctorService.addMedicalRecord(request.getPatientAddress(), request.getDiagnosis(), request.getPrescription());
-////            return ResponseEntity.ok("Medical record added successfully");
-////        } catch (Exception e) {
-////            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding medical record: " + e.getMessage());
-////        }
-////    }
+    @Autowired
+    private DoctorService doctorService;
+
+    @PostMapping("/add-medical-record")
+    public ResponseEntity<String> addMedicalRecord(@RequestBody AddMedRecDto addMedRecDto) {
+        try {
+            doctorService.addMedicalRecord(addMedRecDto.getPrivateKey(), addMedRecDto.getMedRecDto());
+            return ResponseEntity.ok("Medical record added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding medical record: " + e.getMessage());
+        }
+    }
 }
 
