@@ -4,6 +4,8 @@ import com.example.consultationservice.dto.MedRecDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+
 @Service
 public class DoctorService {
 
@@ -18,4 +20,16 @@ public class DoctorService {
             throw new RuntimeException("Error adding medical record : "+e.getMessage());
         }
     }
+
+    public void scheduleAppointment(String doctorPrivateKey, String patientAddress, BigInteger timeStamp) {
+        try {
+            contractService.scheduleAppointment(doctorPrivateKey, patientAddress, timeStamp);
+        } catch (Exception e) {
+            throw new RuntimeException("Error scheduling appointment: " + e.getMessage());
+        }
+    }
+
+    
+
+
 }

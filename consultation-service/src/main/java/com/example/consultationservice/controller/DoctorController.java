@@ -1,6 +1,7 @@
 package com.example.consultationservice.controller;
 
 import com.example.consultationservice.dto.AddMedRecDto;
+import com.example.consultationservice.dto.AppointmentDto;
 import com.example.consultationservice.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,22 @@ public class DoctorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding medical record: " + e.getMessage());
         }
     }
+
+
+    @PostMapping("/schedule-appointment")
+    public ResponseEntity<String> scheduleAppointment(@RequestBody AppointmentDto appointmentDto) {
+        try {
+            doctorService.scheduleAppointment(
+                    appointmentDto.getDoctorPrivateKey(),
+                    appointmentDto.getPatientAddress(),
+                    appointmentDto.getTimeStamp()
+            );
+            return ResponseEntity.ok("Appointment scheduled successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error scheduling appointment: " + e.getMessage());
+        }
+    }
+
+
 }
 

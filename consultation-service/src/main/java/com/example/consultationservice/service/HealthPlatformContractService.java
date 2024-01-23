@@ -101,4 +101,18 @@ public class HealthPlatformContractService {
         }
 
     }
+
+    public void scheduleAppointment(String doctorPrivateKey, String patientAddress, BigInteger timeStamp){
+        try {
+            Web3j web3j = Web3j.build(new HttpService());
+            Credentials credentials = Credentials.create(doctorPrivateKey);
+            HealthPlatform loaded = loadContract(contract.getContractAddress(), web3j, credentials);
+            String doctorAddress = credentials.getAddress();
+            loaded.scheduleAppointment(doctorAddress, patientAddress, timeStamp).send();
+        }catch (Exception e){
+            throw new RuntimeException("Error schedueling appointment: " + e.getMessage());
+        }
+    }
+
+
 }
