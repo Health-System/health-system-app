@@ -115,4 +115,14 @@ public class HealthPlatformContractService {
     }
 
 
+    public void completeAppointment(String doctorPrivateKey, BigInteger appointmentId) {
+        try {
+            Web3j web3j = Web3j.build(new HttpService());
+            Credentials credentials = Credentials.create(doctorPrivateKey);
+            HealthPlatform loaded = loadContract(contract.getContractAddress(), web3j, credentials);
+            loaded.completeAppointment(appointmentId).send();
+        } catch (Exception e) {
+            throw new RuntimeException("Error completing appointment: "+e.getMessage());
+        }
+    }
 }

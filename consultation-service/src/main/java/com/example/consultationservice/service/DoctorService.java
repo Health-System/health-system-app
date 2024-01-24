@@ -29,7 +29,13 @@ public class DoctorService {
         }
     }
 
-    
+    public void completeAppointment(String doctorPrivateKey, BigInteger appointmentId) {
+        try {
+            contractService.completeAppointment(doctorPrivateKey,appointmentId);
+        } catch (Exception e) {
+            throw new RuntimeException("Error completing appointment: " + e.getMessage());
+        }
+    }
 
 
 }
