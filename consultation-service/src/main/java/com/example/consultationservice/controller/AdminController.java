@@ -19,15 +19,6 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-//    @PostMapping("/authenticate")
-//    public ResponseEntity<String> authenticateAdmin(@RequestBody DeployDto deployDto) {
-//        if (adminService.authenticateAdmin(deployDto.getPrivateKey())) {
-//            return ResponseEntity.ok("Admin authenticated successfully");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid private key");
-//        }
-//    }
-
 
     @PostMapping("/deploy-contract/")
     public ResponseEntity<String> deployContract(@RequestBody DeployDto deployDto) {
@@ -49,7 +40,6 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding doctor: " + e.getMessage());
         }
     }
-
 
 
     @PostMapping("/add-patient")

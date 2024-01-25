@@ -16,23 +16,9 @@ public class HealthPlatformContractService {
     private final static BigInteger GAS_LIMIT = BigInteger.valueOf(6721975L);
     private final static BigInteger GAS_PRICE = BigInteger.valueOf(20000000000L);
 
-//    private static String contractAddress = null ;
-
 
     public void setContract(HealthPlatform contract) {
         this.contract = contract;
-    }
-
-
-    public String getAdministratorAddress() throws Exception {
-        // Implement logic to get the administrator's address from the contract
-//        return contract.administrator().send();
-        return null;
-    }
-
-    public boolean isAdministrator(String adminAddress, Credentials adminCredentials) {
-        // Implement logic to check if the provided credentials match the administrator's address
-        return adminAddress.equalsIgnoreCase(adminCredentials.getAddress());
     }
 
 
@@ -50,8 +36,7 @@ public class HealthPlatformContractService {
             this.setContract(healthPlatform);
             return healthPlatform.getContractAddress();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error deploying the contract: " + e.getMessage());
         }
     }
 

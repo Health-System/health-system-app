@@ -1,7 +1,5 @@
 package com.example.consultationservice.contracts;
 
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
